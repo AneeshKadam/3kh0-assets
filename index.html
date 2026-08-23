@@ -3,23 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Instant 8-Column Arcade</title>
+    <title>My Massive 8-Column Arcade</title>
     <style>
         body { background: #111; color: #fff; font-family: sans-serif; text-align: center; margin: 0; padding: 20px; }
         
-        /* 8-Column Grid Layout */
+        /* Strict 8-Column Grid Layout */
         .game-grid {
             display: grid;
-            grid-template-columns: repeat(8, 1fr); /* Exactly 8 items per row */
+            grid-template-columns: repeat(8, 1fr); /* Exactly 8 games per row */
             gap: 12px;
             max-width: 1400px;
             margin: 20px auto;
             padding: 10px;
         }
 
-        /* Screen Adjustment for smaller displays */
+        /* Responsive scaling for laptops, tablets, and phones */
         @media (max-width: 1200px) { .game-grid { grid-template-columns: repeat(4, 1fr); } }
-        @media (max-width: 600px) { .game-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 768px) { .game-grid { grid-template-columns: repeat(2, 1fr); } }
 
         .game-card {
             background: #222;
@@ -36,7 +36,7 @@
         }
         .game-card:hover { background: #007bff; border-color: #00c6ff; transform: scale(1.05); }
 
-        /* Theater Screen Overlay */
+        /* Virtual Console/Theater View Overlay */
         .theater { display: none; margin: 20px auto; max-width: 900px; }
         iframe { width: 100%; height: 550px; border: 4px solid #333; border-radius: 8px; background: #000; }
         .close-btn { background: #dc3545; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; margin-bottom: 10px; font-weight: bold; }
@@ -47,48 +47,45 @@
     <h1>🎮 Massive HTML5 Arcade 🕹️</h1>
     <p>Click a box below to load the game instantly</p>
 
-    <!-- Game Player Section -->
+    <!-- Game Player Viewport -->
     <div class="theater" id="theater">
         <button class="close-btn" onclick="closeGame()">Close Game ✕</button>
         <iframe id="player" allowfullscreen></iframe>
     </div>
 
-    <!-- Grid automatically filled by JavaScript -->
-    <div class="game-grid" id="grid">Loading games...</div>
+    <!-- 8-Column Grid -->
+    <div class="game-grid" id="grid"></div>
 
     <script>
-        // Connect directly to GitHub's public API to scan your specific repository folders
-        const repoUser = "aneeshkadam";
-        const repoName = "3kh0-assets";
+        // A hardcoded array of the top 3kh0 repository games.
+        // This completely bypasses GitHub's API limits so your site never breaks.
+        const popularGames = [
+            "slope", "retro-bowl", "drive-mad", "idle-breakout", "cookie-clicker", 
+            "geometry-dash", "1v1lol", "crossyroad", "bitlife", "subway-surfers", 
+            "tetris", "tunnel-rush", "run-3", "snow-rider-3d", "tanuki-sunset",
+            "minecraft-classic", "happy-wheels", "ovo", "papalouie", "cluster-rush",
+            "pacman", "sonic-rems", "basket-random", "soccer-random", "temple-run-2",
+            "binding-of-isaac", "smash-karts", "world-worlds-hardest-game", "drift-hunters",
+            "slope-2", "vex-7", "stickman-hook", "getaway-shootout", "rooftop-snipers"
+        ];
 
-        async function loadArcade() {
-            try {
-                const response = await fetch(`https://github.com{repoUser}/${repoName}/contents/`);
-                const items = await response.json();
-                const grid = document.getElementById('grid');
-                grid.innerHTML = ''; // Clear loading message
-
-                // Filters folders out from files (like README/License)
-                const folders = items.filter(item => item.type === 'dir' && !item.name.startsWith('.'));
-
-                folders.forEach(folder => {
-                    const card = document.createElement('div');
-                    card.className = 'game-card';
-                    // Cleans up hyphens in names for cleaner display titles
-                    card.innerText = folder.name.replace(/-/g, ' '); 
-                    card.onclick = () => playGame(folder.name);
-                    grid.appendChild(card);
-                });
-            } catch (error) {
-                document.getElementById('grid').innerText = "Error loading arcade feed.";
-                console.error(error);
-            }
+        function initArcade() {
+            const grid = document.getElementById('grid');
+            
+            popularGames.forEach(gameName => {
+                const card = document.createElement('div');
+                card.className = 'game-card';
+                // Automatically replaces hyphens with spaces for a clean button label
+                card.innerText = gameName.replace(/-/g, ' '); 
+                card.onclick = () => playGame(gameName);
+                grid.appendChild(card);
+            });
         }
 
         function playGame(folderName) {
             document.getElementById('player').src = `${folderName}/index.html`;
             document.getElementById('theater').style.display = 'block';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll up smoothly to play
         }
 
         function closeGame() {
@@ -96,8 +93,8 @@
             document.getElementById('player').src = '';
         }
 
-        // Run the script on startup
-        loadArcade();
+        // Boot arcade catalog layout immediately
+        initArcade();
     </script>
 </body>
 </html>
