@@ -3,98 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Massive 8-Column Arcade</title>
+    <title>My Pure HTML 8-Column Arcade</title>
     <style>
         body { background: #111; color: #fff; font-family: sans-serif; text-align: center; margin: 0; padding: 20px; }
         
-        /* Strict 8-Column Grid Layout */
+        /* 8-Column Grid Layout using Pure CSS */
         .game-grid {
             display: grid;
-            grid-template-columns: repeat(8, 1fr); /* Exactly 8 games per row */
+            grid-template-columns: repeat(8, 1fr); /* Exactly 8 items per row */
             gap: 12px;
             max-width: 1400px;
-            margin: 20px auto;
+            margin: 40px auto;
             padding: 10px;
         }
 
-        /* Responsive scaling for laptops, tablets, and phones */
+        /* Screen Adjustment for smaller devices */
         @media (max-width: 1200px) { .game-grid { grid-template-columns: repeat(4, 1fr); } }
         @media (max-width: 768px) { .game-grid { grid-template-columns: repeat(2, 1fr); } }
 
+        /* Pure HTML Link Styling to look like game cards */
         .game-card {
             background: #222;
             border: 2px solid #333;
             border-radius: 6px;
             padding: 15px 5px;
-            cursor: pointer;
             text-transform: capitalize;
             font-size: 14px;
+            color: #fff;
+            text-decoration: none; /* Removes the underline from links */
+            display: block;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
             transition: 0.2s;
         }
         .game-card:hover { background: #007bff; border-color: #00c6ff; transform: scale(1.05); }
-
-        /* Virtual Console/Theater View Overlay */
-        .theater { display: none; margin: 20px auto; max-width: 900px; }
-        iframe { width: 100%; height: 550px; border: 4px solid #333; border-radius: 8px; background: #000; }
-        .close-btn { background: #dc3545; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; margin-bottom: 10px; font-weight: bold; }
     </style>
 </head>
 <body>
 
     <h1>🎮 Massive HTML5 Arcade 🕹️</h1>
-    <p>Click a box below to load the game instantly</p>
+    <p>Click a box below to play the game instantly</p>
 
-    <!-- Game Player Viewport -->
-    <div class="theater" id="theater">
-        <button class="close-btn" onclick="closeGame()">Close Game ✕</button>
-        <iframe id="player" allowfullscreen></iframe>
+    <!-- Static Grid using standard HTML Anchor Links -->
+    <div class="game-grid">
+        <a href="slope/index.html" class="game-card">Slope</a>
+        <a href="retro-bowl/index.html" class="game-card">Retro Bowl</a>
+        <a href="drive-mad/index.html" class="game-card">Drive Mad</a>
+        <a href="idle-breakout/index.html" class="game-card">Idle Breakout</a>
+        <a href="cookie-clicker/index.html" class="game-card">Cookie Clicker</a>
+        <a href="geometry-dash/index.html" class="game-card">Geometry Dash</a>
+        <a href="1v1lol/index.html" class="game-card">1v1 LOL</a>
+        <a href="crossyroad/index.html" class="game-card">Crossy Road</a>
+        
+        <!-- Row 2 -->
+        <a href="bitlife/index.html" class="game-card">Bitlife</a>
+        <a href="subway-surfers/index.html" class="game-card">Subway Surfers</a>
+        <a href="tetris/index.html" class="game-card">Tetris</a>
+        <a href="tunnel-rush/index.html" class="game-card">Tunnel Rush</a>
+        <a href="run-3/index.html" class="game-card">Run 3</a>
+        <a href="snow-rider-3d/index.html" class="game-card">Snow Rider 3D</a>
+        <a href="tanuki-sunset/index.html" class="game-card">Tanuki Sunset</a>
+        <a href="minecraft-classic/index.html" class="game-card">Minecraft Classic</a>
+
+        <!-- Row 3 -->
+        <a href="happy-wheels/index.html" class="game-card">Happy Wheels</a>
+        <a href="ovo/index.html" class="game-card">OVO</a>
+        <a href="papalouie/index.html" class="game-card">Papa Louie</a>
+        <a href="cluster-rush/index.html" class="game-card">Cluster Rush</a>
+        <a href="pacman/index.html" class="game-card">Pacman</a>
+        <a href="sonic-rems/index.html" class="game-card">Sonic Rems</a>
+        <a href="basket-random/index.html" class="game-card">Basket Random</a>
+        <a href="soccer-random/index.html" class="game-card">Soccer Random</a>
+
+        <!-- Row 4 -->
+        <a href="temple-run-2/index.html" class="game-card">Temple Run 2</a>
+        <a href="binding-of-isaac/index.html" class="game-card">Binding of Isaac</a>
+        <a href="smash-karts/index.html" class="game-card">Smash Karts</a>
+        <a href="world-worlds-hardest-game/index.html" class="game-card">World's Hardest Game</a>
+        <a href="drift-hunters/index.html" class="game-card">Drift Hunters</a>
+        <a href="slope-2/index.html" class="game-card">Slope 2</a>
+        <a href="vex-7/index.html" class="game-card">Vex 7</a>
+        <a href="stickman-hook/index.html" class="game-card">Stickman Hook</a>
     </div>
 
-    <!-- 8-Column Grid -->
-    <div class="game-grid" id="grid"></div>
-
-    <script>
-        // A hardcoded array of the top 3kh0 repository games.
-        // This completely bypasses GitHub's API limits so your site never breaks.
-        const popularGames = [
-            "slope", "retro-bowl", "drive-mad", "idle-breakout", "cookie-clicker", 
-            "geometry-dash", "1v1lol", "crossyroad", "bitlife", "subway-surfers", 
-            "tetris", "tunnel-rush", "run-3", "snow-rider-3d", "tanuki-sunset",
-            "minecraft-classic", "happy-wheels", "ovo", "papalouie", "cluster-rush",
-            "pacman", "sonic-rems", "basket-random", "soccer-random", "temple-run-2",
-            "binding-of-isaac", "smash-karts", "world-worlds-hardest-game", "drift-hunters",
-            "slope-2", "vex-7", "stickman-hook", "getaway-shootout", "rooftop-snipers"
-        ];
-
-        function initArcade() {
-            const grid = document.getElementById('grid');
-            
-            popularGames.forEach(gameName => {
-                const card = document.createElement('div');
-                card.className = 'game-card';
-                // Automatically replaces hyphens with spaces for a clean button label
-                card.innerText = gameName.replace(/-/g, ' '); 
-                card.onclick = () => playGame(gameName);
-                grid.appendChild(card);
-            });
-        }
-
-        function playGame(folderName) {
-            document.getElementById('player').src = `${folderName}/index.html`;
-            document.getElementById('theater').style.display = 'block';
-            window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll up smoothly to play
-        }
-
-        function closeGame() {
-            document.getElementById('theater').style.display = 'none';
-            document.getElementById('player').src = '';
-        }
-
-        // Boot arcade catalog layout immediately
-        initArcade();
-    </script>
 </body>
 </html>
+
