@@ -107,12 +107,83 @@
             height:142px;
             border-radius:12px;
         }
+        /* THE JUMPSCARE OVERLAY */
+        #jumpscare-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        /* This class handles the crazy flashing/vibrating during the prank */
+        .active-prank {
+            animation: flashScreen 0.1s infinite alternate;
+        }
+
+        .jumpscare-text {
+            color: black;
+            background-color: white;
+            font-size: 4rem;
+            padding: 10px 30px;
+            transform: rotate(-5deg); 
+            box-shadow: 10px 10px 0px black;
+            margin: 10px;
+            text-transform: uppercase;
+        }
+
+        .sub-text {
+            color: white;
+            background-color: black;
+            font-size: 2.5rem;
+            transform: rotate(3deg);
+            box-shadow: -10px 10px 0px white;
+        }
+
+        /* THE ESCAPE BUTTON (Hidden until the video ends) */
+        #escape-btn {
+            display: none;
+            margin-top: 30px;
+            font-size: 1.5rem;
+            padding: 15px 30px;
+            background-color: white;
+            color: black;
+            border: 4px solid black;
+            cursor: pointer;
+            font-family: 'Arial Black', sans-serif;
+            box-shadow: 5px 5px 0px #dc0000;
+            text-transform: uppercase;
+            z-index: 10000;
+        }
+
+        #escape-btn:hover {
+            background-color: #dc0000;
+            color: white;
+            box-shadow: 5px 5px 0px black;
+        }
+
+        @keyframes flashScreen {
+            0% { background-color: #dc0000; transform: translate(2px, 1px) rotate(0deg); }
+            100% { background-color: #000000; transform: translate(-1px, -2px) rotate(1deg); }
+        }
+
+        /* Completely hides the YouTube player window structure */
+        #api-player {
+            display: none;
+        }
     </style>
 </head>
 <body>
 
     <h1>Aero</h1>
     <p>Click a box below to play the game instantly</p>
+    <div class="hehe"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-banana-icon lucide-banana" onclick="triggerJumpscare()"><path d="M4 13c3.5-2 8-2 10 2a5.5 5.5 0 0 1 8 5"/><path d="M5.15 17.89c5.52-1.52 8.65-6.89 7-12C11.55 4 11.5 2 13 2c3.22 0 5 5.5 5 8 0 6.5-4.2 12-10.49 12C5.11 22 2 22 2 20c0-1.5 1.14-1.55 3.15-2.11Z"/></svg></div>
 
     <!-- Static Grid using standard HTML Anchor Links -->
     <div class="game-grid">
@@ -160,6 +231,73 @@
         <a href="five-nights-at-epsteins/index.html" class="game-card"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiVNw20zz43XKVt_GoUleQJC6WHurG-etO4mrd2r_gjA&s=10" class="game-img"></a>
     </div>
 
+    <div id="jumpscare-overlay" class="active-prank">
+        <div class="jumpscare-text">YOU'LL NEVER SEE IT</div>
+        <div class="jumpscare-text sub-text">COMING !!</div>
+        
+        <!-- The escape button sits inside the overlay, hidden at first -->
+        <button id="escape-btn" onclick="closePrank()">Close Game Portal</button>
+    </div>
+
+    <!-- 3. Container for the API Player (replaces the old iframe tag) -->
+    <div id="api-player"></div>
+
+    <!-- 4. JavaScript handling the YouTube API and state tracking -->
+    <script>
+        // Load the official YouTube Iframe Player API asynchronously
+        var tag = document.createElement('script');
+        tag.src = "https://youtube.com";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        var player;
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('api-player', {
+                height: '0',
+                width: '0',
+                videoId: 'TWOwjiKAtZ4', // Your exact video ID
+                events: {
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        function triggerJumpscare() {
+            // Unhide the overlay wrapper
+            var overlay = document.getElementById('jumpscare-overlay');
+            overlay.style.display = 'flex';
+            
+            // Start the music via the API
+            player.playVideo();
+        }
+
+        // This function constantly listens to what the video is doing
+        function onPlayerStateChange(event) {
+            // YT.PlayerState.ENDED (or code 0) means the video just finished playing
+            if (event.data == YT.PlayerState.ENDED) {
+                var overlay = document.getElementById('jumpscare-overlay');
+                var escapeBtn = document.getElementById('escape-btn');
+
+                // 1. Remove the flashing/shaking animation so their eyes can rest
+                overlay.classList.remove('active-prank');
+                overlay.style.backgroundColor = '#121212'; // Reset to calm dark grey
+
+                // 2. Instantly pop up the escape button
+                escapeBtn.style.display = 'block';
+            }
+        }
+
+        function closePrank() {
+            // Completely hide the overlay and reset the page back to normal
+            var overlay = document.getElementById('jumpscare-overlay');
+            var escapeBtn = document.getElementById('escape-btn');
+            
+            overlay.style.display = 'none';
+            escapeBtn.style.display = 'none';
+            overlay.classList.add('active-prank'); // Reset the animation class for next time
+        }
+    </script>
+
+
 </body>
 </html>
-
