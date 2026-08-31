@@ -235,68 +235,56 @@
         <div class="jumpscare-text">YOU'LL NEVER SEE IT</div>
         <div class="jumpscare-text sub-text">COMING !!</div>
         
-        <!-- The escape button sits inside the overlay, hidden at first -->
         <button id="escape-btn" onclick="closePrank()">Close Game Portal</button>
     </div>
 
-    <!-- 3. Container for the API Player (replaces the old iframe tag) -->
-    <div id="api-player"></div>
+    <!-- 3. Native Audio Element (Bypasses all iframe security blocks) -->
+    <!-- This plays a publicly hosted clean version of the specific audio clip -->
+    <audio id="ragebait-audio" src="https://archive.org"></audio>
 
-    <!-- 4. JavaScript handling the YouTube API and state tracking -->
+    <!-- 4. Clean Javascript -->
     <script>
-        // Load the official YouTube Iframe Player API asynchronously
-        var tag = document.createElement('script');
-        tag.src = "https://youtube.com";
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-        var player;
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('api-player', {
-                height: '0',
-                width: '0',
-                videoId: 'TWOwjiKAtZ4', // Your exact video ID
-                events: {
-                    'onStateChange': onPlayerStateChange
-                }
-            });
-        }
+        var prankTimer;
 
         function triggerJumpscare() {
-            // Unhide the overlay wrapper
+            // 1. Show the flashing overlay immediately
             var overlay = document.getElementById('jumpscare-overlay');
             overlay.style.display = 'flex';
             
-            // Start the music via the API
-            player.playVideo();
-        }
+            // 2. Play the native audio (Browsers allow this because the user clicked the page)
+            var audio = document.getElementById('ragebait-audio');
+            audio.currentTime = 0; // Reset track to beginning
+            audio.play();
 
-        // This function constantly listens to what the video is doing
-        function onPlayerStateChange(event) {
-            // YT.PlayerState.ENDED (or code 0) means the video just finished playing
-            if (event.data == YT.PlayerState.ENDED) {
-                var overlay = document.getElementById('jumpscare-overlay');
+            // 3. Wait for the audio clip length (35 seconds = 35000 milliseconds)
+            prankTimer = setTimeout(function() {
                 var escapeBtn = document.getElementById('escape-btn');
-
-                // 1. Remove the flashing/shaking animation so their eyes can rest
+                
+                // Stop the flashing red animation 
                 overlay.classList.remove('active-prank');
-                overlay.style.backgroundColor = '#121212'; // Reset to calm dark grey
+                overlay.style.backgroundColor = '#121212'; 
 
-                // 2. Instantly pop up the escape button
+                // Pop up the escape button
                 escapeBtn.style.display = 'block';
-            }
+            }, 35000); 
         }
 
         function closePrank() {
-            // Completely hide the overlay and reset the page back to normal
             var overlay = document.getElementById('jumpscare-overlay');
             var escapeBtn = document.getElementById('escape-btn');
+            var audio = document.getElementById('ragebait-audio');
             
+            // Instantly stop the sound and clear the backup timer
+            audio.pause();
+            clearTimeout(prankTimer);
+            
+            // Hide the overlay setup
             overlay.style.display = 'none';
             escapeBtn.style.display = 'none';
-            overlay.classList.add('active-prank'); // Reset the animation class for next time
+            overlay.classList.add('active-prank'); 
         }
     </script>
+
 
 
 </body>
