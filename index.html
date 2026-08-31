@@ -225,59 +225,54 @@
         <div class="game-card"><div class="card-inner"><a href="five-nights-at-epsteins/index.html" class="game-card"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiVNw20zz43XKVt_GoUleQJC6WHurG-etO4mrd2r_gjA&s=10" class="game-img"></a></div></div>
     </div>
 
-    <div id="jumpscare-overlay" class="active-prank">
-        <div class="jumpscare-text">YOU'LL NEVER SEE IT</div>
-        <div class="jumpscare-text sub-text">COMING !!</div>
-        
-        <button id="escape-btn" onclick="closePrank()">haha get ragebaited</button>
-    </div>
+    <div id="jumpscare-overlay">
+  <div class="jumpscare-text">YOU'LL NEVER SEE IT</div>
+  <div class="jumpscare-text sub-text">COMING !!</div>
+  <button id="escape-btn" onclick="closePrank()">haha get ragebaited</button>
+</div>
 
-    <!-- 3. Native Audio Element (Bypasses all iframe security blocks) -->
-    <!-- This plays a publicly hosted clean version of the specific audio clip -->
-    <audio id="ragebait-audio" src="ragebait.mp3"></audio>
+<audio id="ragebait-audio" src="ragebait.mp3"></audio>
 
-    <!-- 4. Clean Javascript -->
-    <script>
-        var prankTimer;
+<script>
+  var prankTimer;
 
-        function triggerJumpscare() {
-            // 1. Show the flashing overlay immediately
-            var overlay = document.getElementById('jumpscare-overlay');
-            overlay.style.display = 'flex';
-            
-            // 2. Play the native audio (Browsers allow this because the user clicked the page)
-            var audio = document.getElementById('ragebait-audio');
-            audio.currentTime = 0; // Reset track to beginning
-            audio.play();
+  function triggerJumpscare() {
+    var overlay = document.getElementById('jumpscare-overlay');
+    var audio = document.getElementById('ragebait-audio');
+    var escapeBtn = document.getElementById('escape-btn');
 
-            // 3. Wait for the audio clip length (35 seconds = 35000 milliseconds)
-            prankTimer = setTimeout(function() {
-                var escapeBtn = document.getElementById('escape-btn');
-                
-                // Stop the flashing red animation 
-                overlay.classList.remove('active-prank');
-                overlay.style.backgroundColor = '#121212'; 
+    // show overlay and enable animation
+    overlay.style.display = 'flex';
+    overlay.classList.add('active-prank');
 
-                // Pop up the escape button
-                escapeBtn.style.display = 'block';
-            }, 35000); 
-        }
+    // play audio if available
+    audio.currentTime = 0;
+    audio.play().catch(function(e){ /* autoplay blocked or missing file */ });
 
-        function closePrank() {
-            var overlay = document.getElementById('jumpscare-overlay');
-            var escapeBtn = document.getElementById('escape-btn');
-            var audio = document.getElementById('ragebait-audio');
-            
-            // Instantly stop the sound and clear the backup timer
-            audio.pause();
-            clearTimeout(prankTimer);
-            
-            // Hide the overlay setup
-            overlay.style.display = 'none';
-            escapeBtn.style.display = 'none';
-            overlay.classList.add('active-prank'); 
-        }
-    </script>
+    // after 35s stop flashing and show escape
+    prankTimer = setTimeout(function() {
+      overlay.classList.remove('active-prank');
+      overlay.style.backgroundColor = '#121212';
+      escapeBtn.style.display = 'block';
+    }, 35000);
+  }
+
+  function closePrank() {
+    var overlay = document.getElementById('jumpscare-overlay');
+    var escapeBtn = document.getElementById('escape-btn');
+    var audio = document.getElementById('ragebait-audio');
+
+    // stop and cleanup
+    audio.pause();
+    audio.currentTime = 0;
+    clearTimeout(prankTimer);
+
+    // hide overlay and stop animation
+    overlay.classList.remove('active-prank');
+    overlay.style.display = 'none';
+    escapeBtn.style.display = 'none';
+  }
+</script>
 
 
 
