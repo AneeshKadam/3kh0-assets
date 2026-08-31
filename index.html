@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Pure HTML 8-Column Arcade</title>
+    <title>Aero Preview</title>
     <style>
         body { background: #111; color: #fff; font-family: sans-serif; text-align: center; margin: 0; padding: 20px; }
         
@@ -23,26 +23,89 @@
 
         /* Pure HTML Link Styling to look like game cards */
         .game-card {
-            background: #222;
-            border: 2px solid #333;
-            border-radius: 6px;
-            padding: 15px 5px;
-            text-transform: capitalize;
-            font-size: 14px;
-            color: #fff;
-            text-decoration: none; /* Removes the underline from links */
-            display: block;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            transition: 0.2s;
-            width:178px;
-            height:142px
+            position: relative;
+  width: 150px;
+  height: 150px;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+  background: #222;
         }
-        .game-card:hover { background: #007bff; border-color: #00c6ff; transform: scale(1.05); }
+        .game-card::before {
+  content: '';
+  position: absolute;
+  width: 150%;
+  height: 150%;
+  background: conic-gradient(
+    #3b82f6, /* Blue */
+    #06b6d4, /* Cyan */
+    #a855f7, /* Purple */
+    #3b82f6  /* Blue loop */
+  );
+  
+  /* HIDE THE EFFECT BY DEFAULT */
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* 3. TARGETED HOVER STATE: Turn on the visibility and spin the animation */
+.game-card:hover::before {
+  opacity: 1;
+  animation: spin 2.5s linear infinite; /* Starts spinning ONLY on hover */
+}
+
+/* Zoom the whole card slightly on hover */
+.game-card:hover {
+  transform: scale(1.05);
+}
+.card-inner {
+  position: absolute;
+  inset: 3px; /* This dictates the line thickness (3px wide) */
+  background: #121214; /* Match this to your web page's dark background */
+  border-radius: 9px;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.card-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 5. The outward under-glow (Hidden by default) */
+.game-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  box-shadow: 0 0 0px transparent;
+  transition: box-shadow 0.3s ease;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* TARGETED HOVER STATE: Turn on the soft outward blur glow */
+.game-card:hover::after {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.6); 
+}
+        @keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+        .game-card:hover {transform: scale(1.05); }
         .game-img {
             width:178px;
             height:142px;
+            border-radius:12px;
         }
     </style>
 </head>
@@ -53,7 +116,7 @@
 
     <!-- Static Grid using standard HTML Anchor Links -->
     <div class="game-grid">
-        <a href="slope/index.html" class="game-card"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhAYk8n_GWLuTcVfIsOOv7pKRpGh8C2pWExw9uAh4kKg&s=10" class="game-img"></a>
+        <div class="game-card"><div class="card-inner"><a href="slope/index.html"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhAYk8n_GWLuTcVfIsOOv7pKRpGh8C2pWExw9uAh4kKg&s=10" class="game-img"></a></div></div>
         <a href="retro-bowl/index.html" class="game-card"><img src="https://upload.wikimedia.org/wikipedia/en/b/bf/Retro_Bowl_cover.png?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=thumbnail_unscaled&_=20211121194148" class="game-img"></a>
         <a href="drive-mad/index.html" class="game-card"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQweyLDiaCsOfymxUHhScRfxoPKYMjtqbXtW55IfR9ew&s=10" class="game-img"></a>
         <a href="idle-breakout/index.html" class="game-card"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlanMNMVnTBPfaL6D4TB014VlYzIEMME2kjcc95-H5nw&s=10" class="game-img"></a>
@@ -94,7 +157,7 @@
 
         <a href="Rocket-League/index.html" class="game-card"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTn8tBjkpK8sopPB9mJEPb4R9FThQB3PcqJx2OC1FjuTw&s=10" class="game-img"></a>
         <a href="roblox/index.html" class="game-card"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9-ZL3DqRpijj1RpmLxFUEK8ib658GxGZWq4bGhGSt8w&s=10" class="game-img"></a>
-        <a href="five-nights-at-epsteins/index.html"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiVNw20zz43XKVt_GoUleQJC6WHurG-etO4mrd2r_gjA&s=10"></a>
+        <a href="five-nights-at-epsteins/index.html" class="game-card"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSiVNw20zz43XKVt_GoUleQJC6WHurG-etO4mrd2r_gjA&s=10" class="game-img"></a>
     </div>
 
 </body>
