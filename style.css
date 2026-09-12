@@ -219,7 +219,29 @@
 }
 
 /* The Moving Circle */
-.moving-circle {
+.moving-circle-1 {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: linear-gradient(45deg, #000080, #000000); /* Colorful gradient */
+  border-radius: 50%; /* Makes it a circle */
+  filter: blur(80px); /* Softens the edges for an ambient glow */
+  opacity: 0.6;
+  
+  /* Animation: name | duration | timing-function | iteration-count */
+  animation: floatAround 12s ease-in-out infinite alternate;
+}.moving-circle-2 {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: linear-gradient(45deg, #000080, #000000); /* Colorful gradient */
+  border-radius: 50%; /* Makes it a circle */
+  filter: blur(80px); /* Softens the edges for an ambient glow */
+  opacity: 0.6;
+  
+  /* Animation: name | duration | timing-function | iteration-count */
+  animation: floatAround 12s ease-in-out infinite alternate;
+}.moving-circle-3 {
   position: absolute;
   width: 400px;
   height: 400px;
