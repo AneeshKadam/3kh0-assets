@@ -223,7 +223,7 @@
   position: absolute;
   width: 400px;
   height: 400px;
-  background: linear-gradient(45deg, #ff007f, #7928ca); /* Colorful gradient */
+  background: linear-gradient(45deg, #000080, #000000); /* Colorful gradient */
   border-radius: 50%; /* Makes it a circle */
   filter: blur(80px); /* Softens the edges for an ambient glow */
   opacity: 0.6;
