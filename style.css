@@ -86,6 +86,7 @@
 /* TARGETED HOVER STATE: Turn on the soft outward blur glow */
 .game-card:hover::after {
   box-shadow: 0 0 20px rgba(59, 130, 246, 0.6); 
+ z-index:2;
 }
         @keyframes spin {
   0% {
@@ -94,6 +95,7 @@
   100% {
     transform: rotate(360deg);
   }
+  
 }
         .game-card:hover {transform: scale(1.05); }
         .game-img {
