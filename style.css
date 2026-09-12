@@ -267,9 +267,9 @@
   }
 }
 @keyframes floatAround2 {
-  0% { transform: translate(10vw, 10vh); }
-  50% { transform: translate(50vw, 40vh) scale(1.2); }
-  100% { transform: translate(20vw, 60vh); }
+  0% { transform: translate(40vw, 60vh); }
+  50% { transform: translate(10vw, 30vh) scale(1.2); }
+  100% { transform: translate(20vw, 80vh); }
 }
 
 @keyframes floatAround3 {
