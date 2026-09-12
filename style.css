@@ -165,34 +165,46 @@
             100% { background-color: #000000; transform: translate(-1px, -2px) rotate(1deg); }
         }
 .hover-text {
-      display: flex;
-      align-items: flex-end; /* Pushes text to the bottom */
-      padding: 20px;
-      color: white;
-      font-family: sans-serif;
-      
-      /* Only fades the bottom 1/4 (75% to 100%) */
-      background: linear-gradient(
-        to bottom, 
-        transparent 0%, 
-        transparent 75%, 
-        rgba(0, 0, 0, 0.95) 100%
-      );
+  display: flex;
+  align-items: flex-end; /* Pushes text to the bottom */
+  justify-content: flex-start; /* Align text to the left */
+  padding: 20px;
+  color: white;
+  font-family: sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  
+  /* Fade from transparent to black in the bottom 1/4 */
+  background: linear-gradient(
+    to bottom, 
+    transparent 0%, 
+    transparent 75%, 
+    rgba(0, 0, 0, 0.95) 100%
+  );
 
-      /* Start completely hidden */
-      opacity: 0; 
-      
-      /* Makes the appearance smooth (0.3 seconds) */
-      transition: opacity 0.3s ease-in-out; 
-    }
+  /* Start completely hidden */
+  opacity: 0; 
+  
+  /* Smooth fade-in (0.3 seconds) */
+  transition: opacity 0.3s ease-in-out; 
+  
+  /* Position it absolutely within the card */
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  inset: 0;
+  z-index: 2;
+}
 
-    .hover-text p {
-      margin: 0;
-      font-size: 20px;
-    }
+.hover-text p {
+  margin: 0;
+  font-size: 18px;
+  white-space: nowrap; /* Keeps text on one line */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Adds ... if text is too long */
+}
+
+/* Show text on hover */
 .card-inner:hover .hover-text {
-      opacity: 1;
-    }
-.game-img, .hover-text {
-      grid-area: 1 / 1; 
-    }
+  opacity: 1;
+}
