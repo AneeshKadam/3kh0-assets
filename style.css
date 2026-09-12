@@ -272,7 +272,7 @@
   100% { transform: translate(20vw, 60vh); }
 }
 
-@keyframes floatAround2 {
+@keyframes floatAround3 {
   0% { transform: translate(80vw, 20vh); }
   50% { transform: translate(30vw, 60vh) scale(1.2); }
   100% { transform: translate(70vw, 10vh); }
