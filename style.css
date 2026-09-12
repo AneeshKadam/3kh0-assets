@@ -229,7 +229,7 @@
   opacity: 0.6;
   
   /* Animation: name | duration | timing-function | iteration-count */
-  animation: floatAround 12s ease-in-out infinite alternate;
+  animation: floatAround1 12s ease-in-out infinite alternate;
 }.moving-circle-2 {
   position: absolute;
   width: 400px;
@@ -240,7 +240,7 @@
   opacity: 0.6;
   
   /* Animation: name | duration | timing-function | iteration-count */
-  animation: floatAround 12s ease-in-out infinite alternate;
+  animation: floatAround2 12s ease-in-out infinite alternate;
 }.moving-circle-3 {
   position: absolute;
   width: 400px;
@@ -251,11 +251,11 @@
   opacity: 0.6;
   
   /* Animation: name | duration | timing-function | iteration-count */
-  animation: floatAround 12s ease-in-out infinite alternate;
+  animation: floatAround3 12s ease-in-out infinite alternate;
 }
 
 /* Smooth drifting motion path */
-@keyframes floatAround {
+@keyframes floatAround1 {
   0% {
     transform: translate(10vw, 10vh);
   }
@@ -265,4 +265,15 @@
   100% {
     transform: translate(20vw, 60vh);
   }
+}
+@keyframes floatAround2 {
+  0% { transform: translate(10vw, 10vh); }
+  50% { transform: translate(50vw, 40vh) scale(1.2); }
+  100% { transform: translate(20vw, 60vh); }
+}
+
+@keyframes floatAround2 {
+  0% { transform: translate(80vw, 20vh); }
+  50% { transform: translate(30vw, 60vh) scale(1.2); }
+  100% { transform: translate(70vw, 10vh); }
 }
