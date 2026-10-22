@@ -264,6 +264,41 @@
     escapeBtn.style.display = 'none';
   }
     const name = document.createElement("p");
+      
+async function loadTruffledGames() {
+  const grid = document.getElementById("truffledGrid");
+
+  try {
+    const response = await fetch("truffled/games.json");
+
+    if (!response.ok) {
+      throw new Error(`games.json returned ${response.status}`);
+    }
+
+    const games = await response.json();
+    const fragment = document.createDocumentFragment();
+
+    games.forEach(game => {
+      const card = document.createElement("div");
+      card.className = "game-card";
+
+      const inner = document.createElement("div");
+      inner.className = "card-inner";
+
+      const link = document.createElement("a");
+      link.href = "truffled-game.html?game=" +
+        encodeURIComponent("truffled/" + game.game);
+
+      const img = document.createElement("img");
+      img.src = "truffled/" + game.cover;
+      img.className = "game-img";
+      img.alt = game.name;
+      img.loading = "lazy";
+
+      const hover = document.createElement("div");
+      hover.className = "hover-text";
+
+      const name = document.createElement("p");
       name.textContent = game.name;
 
       link.appendChild(img);
@@ -276,9 +311,11 @@
     grid.appendChild(fragment);
   } catch (error) {
     console.error("Failed to load Truffled games:", error);
-    grid.textContent = "Games could not be loaded. Please refresh.";
+    grid.textContent = "Games could not be loaded. Check the console.";
   }
 }
+
+loadTruffledGames();
 
 loadTruffledGames();
 </script>
