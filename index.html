@@ -215,7 +215,7 @@
 <div class="hover-text"><p>Subway Surfers</p></div>
 </div></div>
     </div>
-
+<div class="game-grid" id="truffledGrid"></div>
     <div id="jumpscare-overlay">
   <div class="jumpscare-text">YOU'LL NEVER SEE IT</div>
   <div class="jumpscare-text sub-text">COMING !!</div>
@@ -263,6 +263,24 @@
     overlay.style.display = 'none';
     escapeBtn.style.display = 'none';
   }
+    const name = document.createElement("p");
+      name.textContent = game.name;
+
+      link.appendChild(img);
+      hover.appendChild(name);
+      inner.append(link, hover);
+      card.appendChild(inner);
+      fragment.appendChild(card);
+    });
+
+    grid.appendChild(fragment);
+  } catch (error) {
+    console.error("Failed to load Truffled games:", error);
+    grid.textContent = "Games could not be loaded. Please refresh.";
+  }
+}
+
+loadTruffledGames();
 </script>
 
 
