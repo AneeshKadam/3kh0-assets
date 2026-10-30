@@ -276,3 +276,6 @@ body { background: #111; color: #fff; font-family: sans-serif; text-align: cente
   50% { transform: translate(30vw, 60vh) scale(1.2); }
   100% { transform: translate(70vw, 10vh); }
 }
+#truffledGrid {
+    margin-top: 0;
+}
